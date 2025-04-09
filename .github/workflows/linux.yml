@@ -1,8 +1,11 @@
 name: 'linux'
 on:
   push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
     paths:
       - '.github/workflows/linux.yml'
+      - '.github/release.yml'
       - '**.go'
   schedule:
     - cron: '0 0 * * *'
@@ -22,9 +25,7 @@ jobs:
     - uses: goto-bus-stop/setup-zig@v2
       with:
         version: ${{ vars.ZIG }}
-    - run: |
-        go env
-        go run .
+    - run: go run .
       env:
         CGO_ENABLED: 0
         IMAGE: ${{ vars.LINUX }}
