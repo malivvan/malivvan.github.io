@@ -1,5 +1,8 @@
 name: 'macos'
 on:
+  push:
+    paths:
+      - '.github/workflows/macos.yml'
   schedule:
     - cron:  '0 0 * * *'
   workflow_dispatch:  
