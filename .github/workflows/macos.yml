@@ -1,10 +1,10 @@
-name: 'osxamd'
+name: 'macos'
 on:
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
     paths:
-      - '.github/workflows/osxamd.yml'
+      - '.github/workflows/macos.yml'
       - '.github/release.yml'
       - '**.go'
   schedule:
@@ -12,11 +12,12 @@ on:
   workflow_dispatch:  
 jobs:
   macos:
-    runs-on: ${{ vars.OSXAMD }}
+    runs-on: ${{ vars.MACOS }}
     strategy:
       matrix:
         platform:
           - macos/amd64
+          - macos/arm64
     name: ${{ matrix.platform }}
     steps:
     - uses: actions/checkout@v4
