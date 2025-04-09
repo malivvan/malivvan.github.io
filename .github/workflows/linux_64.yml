@@ -2,42 +2,25 @@ name: 'linux_64'
 on:
   schedule:
     - cron:  '0 0 * * *'
-  workflow_dispatch: 
-    inputs:
-      os_image:
-        description: 'OS Image'
-        type: string
-        default: ${{ vars.OS }}
-      go_version:
-        description: 'Go Version'
-        type: string
-        default: ${{ vars.GO }}
-      node_version:
-        description: 'Node Version'
-        type: string
-        default: ${{ vars.NODE }}
-      zig_version:
-        description: 'Zig Version'
-        type: string
-        default: ${{ vars.ZIG }}   
+  workflow_dispatch:  
 jobs:
   linux_64:
-    runs-on: ${{ inputs.os_image }}
-    name: ${{ inputs.os_image }}
+    runs-on: ${{ vars.OS }}
+    name: ${{ vars.OS }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-go@v5
       with:
-        go-version: ${{ inputs.go_version }}
+        go-version: ${{ vars.GO }}
     - uses: actions/setup-node@v4
       with:
-        node-version: ${{ inputs.node_version }}
+        node-version: ${{ vars.NODE }}
     - uses: goto-bus-stop/setup-zig@v2
       with:
-        version: ${{ inputs.zig_version }}
+        version: ${{ vars.ZIG }}
     - name: running tool
       env:
-        OS_IMAGE: ${{ inputs.os_image }}
+        OS_IMAGE: ${{ vars.OS }}
       run: |
         echo "OS name: ${{ inputs.os_image }}"
         CGO_ENABLED=0 go run .
