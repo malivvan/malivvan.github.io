@@ -12,7 +12,7 @@ on:
   workflow_dispatch:  
 jobs:
   macos:
-    runs-on: ${{ vars.MACOS }}
+    runs-on: ${{ vars.OSXAMD }}
     strategy:
       matrix:
         platform:
