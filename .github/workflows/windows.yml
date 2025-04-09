@@ -12,13 +12,12 @@ on:
   workflow_dispatch:  
 jobs:
   windows:
-    runs-on: ${{ vars.WINDOWS }}
     strategy:
       matrix:
-        platform:
-          - windows/amd64
-          - windows/arm64
-    name: ${{ matrix.platform }}
+        osimage:
+          - windows-2022
+    runs-on: ${{ matrix.osimage }}
+    name: ${{ matrix.osimage }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-go@v5
@@ -33,11 +32,14 @@ jobs:
         version: ${{ vars.ZIG }}
         cache: true
     - name: Set up QEMU
+      if: matrix.osimage == 'windows-2022'
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker buildx
+      if: matrix.osimage == 'windows-2022'
       id: buildx
       uses: docker/setup-buildx-action@v3
     - name: Login to DockerHub
+      if: matrix.osimage == 'windows-2022'
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
@@ -45,4 +47,4 @@ jobs:
     - run: go run .
       env:
         CGO_ENABLED: 0
-        PLATFORM: ${{ matrix.platform }}
+        OS_IMAGE: ${{ matrix.osimage }}
