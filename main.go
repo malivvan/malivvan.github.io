@@ -1,6 +1,11 @@
 package main
 
+import (
+	"fmt"
+	"runtime"
+)
 
 func main() {
-  println("ok")
+	fmt.Printf("GOOS=%s\n", runtime.GOOS)
+	fmt.Printf("GOARCH=%s\n", runtime.GOARCH)
 }
