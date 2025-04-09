@@ -12,12 +12,12 @@ on:
   workflow_dispatch:  
 jobs:
   macos:
-    runs-on: ${{ vars.MACOS }}
     strategy:
       matrix:
-        platform:
-          - macos/amd64
-    name: ${{ matrix.platform }}
+        osimage:
+          - macos-13
+    runs-on: ${{ matrix.osimage }}
+    name: ${{ matrix.osimage }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-go@v5
@@ -44,4 +44,4 @@ jobs:
     - run: go run .
       env:
         CGO_ENABLED: 0
-        PLATFORM: ${{ matrix.platform }}
+        OS_IMAGE: ${{ matrix.osimage }}
