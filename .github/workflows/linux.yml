@@ -1,12 +1,12 @@
-name: 'linux_64'
+name: 'linux'
 on:
   schedule:
     - cron:  '0 0 * * *'
   workflow_dispatch:  
 jobs:
-  linux_64:
-    runs-on: ${{ vars.OS }}
-    name: ${{ vars.OS }}
+  linux:
+    runs-on: ${{ vars.LINUX }}
+    name: ${{ vars.LINUX }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-go@v5
@@ -18,12 +18,8 @@ jobs:
     - uses: goto-bus-stop/setup-zig@v2
       with:
         version: ${{ vars.ZIG }}
-    - name: running tool
-      env:
-        OS_IMAGE: ${{ vars.OS }}
-      run: |
-        echo "OS name: ${{ inputs.os_image }}"
+    - run: |
+        echo "IMAGE: $IMAGE"
         CGO_ENABLED=0 go run .
-
-
-
+      env:
+        IMAGE: ${{ vars.LINUX }}
