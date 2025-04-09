@@ -17,7 +17,7 @@ jobs:
       matrix:
         platform:
           - windows/amd64
-          - windows/386
+          - windows/arm64
     name: ${{ matrix.platform }}
     steps:
     - uses: actions/checkout@v4
