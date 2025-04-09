@@ -4,7 +4,7 @@ on:
     paths:
       - '.github/workflows/macos.yml'
   schedule:
-    - cron:  '0 0 * * *'
+    - cron: ${{ vars.CRON }}
   workflow_dispatch:  
 jobs:
   macos:
@@ -22,7 +22,8 @@ jobs:
       with:
         version: ${{ vars.ZIG }}
     - run: |
-        echo "IMAGE: $IMAGE"
-        CGO_ENABLED=0 go run .
+        go env
+        go run .
       env:
+        CGO_ENABLED: 0
         IMAGE: ${{ vars.MACOS }}
